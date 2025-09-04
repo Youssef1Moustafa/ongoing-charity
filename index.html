@@ -26,23 +26,23 @@
     a:hover{text-decoration:underline}
     .wrap{max-width:1100px;margin:auto;padding:clamp(14px,2vw,24px)}
     .names-grid-fixed {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* عمودين */
-    grid-template-rows: repeat(2, auto);   /* صفين */
-    gap: 15px;
-    margin: 20px 0;
-    max-width: 500px;
-    margin-inline: auto;
-  }
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* عمودين */
+      grid-template-rows: repeat(2, auto);   /* صفين */
+      gap: 15px;
+      margin: 20px 0;
+      max-width: 500px;
+      margin-inline: auto;
+    }
 
-  .names-grid-fixed h5 {
-    margin: 0;
-    padding: 12px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 12px;
-    font-size: clamp(14px, 2vw, 16px);
-    text-align: center;
-  }
+    .names-grid-fixed h5 {
+      margin: 0;
+      padding: 12px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      font-size: clamp(14px, 2vw, 16px);
+      text-align: center;
+    }
     header.hero{
       background:linear-gradient(135deg,#38bdf8, #06b6d4);
       color:#fff;padding:32px 18px;border-bottom-left-radius:28px;border-bottom-right-radius:28px;box-shadow:var(--shadow);
@@ -86,18 +86,18 @@
     .card-sm .text{font-size:15px}
 
     #azkar .card-sm {
-    max-height: 200px;   /* ارتفاع ثابت */
-    overflow-y: auto;    /* Scroll داخلي */
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary) #f1f5f9;
-  }
-  #azkar .card-sm::-webkit-scrollbar {
-    width: 6px;
-  }
-  #azkar .card-sm::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 4px;
-  }
+      max-height: 200px;   /* ارتفاع ثابت */
+      overflow-y: auto;    /* Scroll داخلي */
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary) #f1f5f9;
+    }
+    #azkar .card-sm::-webkit-scrollbar {
+      width: 6px;
+    }
+    #azkar .card-sm::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
     
     .tree{
       background:linear-gradient(180deg,#e6fffb 0,#fafffd 100%);border-radius:var(--radius);
@@ -109,6 +109,27 @@
     .stat{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #eef2f7;border-radius:12px;padding:8px 12px;width:max-content}
     .donate-buttons{display:flex;flex-wrap:wrap;gap:10px}
     footer{margin:26px 0 10px;text-align:center;color:var(--muted)}
+    
+    /* تحسينات إضافية */
+    .toast {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 22px;
+      background: #0ea5e9;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      z-index: 99;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .toast.show {
+      opacity: 1;
+    }
+    
     /* Layout areas */
     .span-12{grid-column:span 12}
     .span-6{grid-column:span 6}
@@ -122,6 +143,9 @@
     @media (max-width: 640px){
       .grid{gap:14px}
       .span-4,.span-3{grid-column:span 12}
+      .names-grid-fixed {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -130,7 +154,6 @@
     <div class="wrap">
       <h1>صدقة جارية لروح المتوفين (رحمهم الله)</h1>
           <div class="names-grid-fixed">
-
             <h5>الحاج يوسف عبدالفتاح بكر</h5>
             <h5>الحاجه ام كلثوم محمد اللبودي</h5>
             <h5>الحاج أحمد محمد اللبودي</h5>
@@ -285,17 +308,16 @@
     ];
 
     const AZKAR = [
-  {
-    title: "أذكار الصباح",
-    text: `أَصبَحْنا على فِطرةِ الإسلامِ، وعلى كلمةِ الإخلاصِ، وعلى دينِ نبيِّنا محمدٍ ﷺ، وعلى مِلَّةِ أبينا إبراهيم حنيفًا مسلمًا، وما كان من المشركين.
+      {
+        title: "أذكار الصباح",
+        text: `أَصبَحْنا على فِطرةِ الإسلامِ، وعلى كلمةِ الإخلاصِ، وعلى دينِ نبيِّنا محمدٍ ﷺ، وعلى مِلَّةِ أبينا إبراهيم حنيفًا مسلمًا، وما كان من المشركين.
     
 بِسمِ اللهِ الذي لا يضرُّ مع اسمِه شيءٌ في الأرضِ ولا في السماءِ وهو السميعُ العليمُ (ثلاث مرات).`
-  },
-  { title:"أذكار المساء", text:"أمسينا وأمسى الملك لله... لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير."},
-  { title:"ذكر عام", text:"سبحان الله وبحمده، سبحان الله العظيم."},
-  { title:"أذكار النوم", text:"باسمك ربي وضعت جنبي وبك أرفعه... إن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين."}
-];
-
+      },
+      { title:"أذكار المساء", text:"أمسينا وأمسى الملك لله... لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير."},
+      { title:"ذكر عام", text:"سبحان الله وبحمده، سبحان الله العظيم."},
+      { title:"أذكار النوم", text:"باسمك ربي وضعت جنبي وبك أرفعه... إن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين."}
+    ];
 
     const RANDOM_AZKAR = [
       "سبحان الله", "الحمد لله", "الله أكبر", "لا إله إلا الله",
@@ -369,57 +391,43 @@
     });
 
     // تحميل PDF للأدعية باستخدام jsPDF
-    async function useArabicFont(doc){
-  try{
-    const res = await fetch("./fonts/Tajawal-Regular.ttf");
-    const buf = await res.arrayBuffer();
-    let binary = "";
-    const bytes = new Uint8Array(buf);
-    const chunk = 0x8000;
-    for (let i=0; i<bytes.length; i+=chunk){
-      binary += String.fromCharCode(...bytes.subarray(i, i+chunk));
-    }
-    const base64 = btoa(binary);
-    doc.addFileToVFS("Tajawal-Regular.ttf", base64);
-    doc.addFont("Tajawal-Regular.ttf", "Tajawal", "normal");
-    doc.setFont("Tajawal", "normal");
-  }catch(e){
-    console.warn("تعذّر تحميل خط عربي. سيُستخدم خط افتراضي.", e);
-  }
-}
+    qs("#downloadPDF").addEventListener("click", async ()=>{
+      const { jsPDF } = window.jspdf || {};
+      if(!jsPDF){ 
+        showToast("مكتبة PDF لم تُحمَّل."); 
+        return; 
+      }
 
-btn.addEventListener("click", async ()=>{
-  const { jsPDF } = window.jspdf || {};
-  if(!jsPDF){ alert("مكتبة PDF لم تُحمَّل."); return; }
+      const doc = new jsPDF({unit:"pt", format:"a4"});
+      
+      // استخدام خط افتراضي يدعم العربية
+      doc.setLanguage('ar');
+      
+      const margin = 48;
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const xRight = pageWidth - margin;
 
-  const doc = new jsPDF({unit:"pt", format:"a4"});
-  await useArabicFont(doc);
+      doc.setFontSize(16);
+      doc.text("أدعية مختارة - صدقة جارية", xRight, margin, {align:"right"});
 
-  const margin = 48;
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const xRight = pageWidth - margin;
+      doc.setFontSize(12);
+      let y = margin + 22;
 
-  doc.setFontSize(16);
-  doc.text("أدعية مختارة - صدقة جارية", xRight, margin, {align:"right"});
+      DUAS.forEach(d=>{
+        if(y > 760){ doc.addPage(); y = margin; }
+        doc.setFont(undefined, "bold");
+        doc.text(d.cat, xRight, y, {align:"right"});
+        y += 16;
 
-  doc.setFontSize(12);
-  let y = margin + 22;
+        doc.setFont(undefined, "normal");
+        const lines = doc.splitTextToSize(d.text, pageWidth - margin*2);
+        doc.text(lines, xRight, y, {align:"right", baseline:"top"});
+        y += (lines.length * 16) + 8;
+      });
 
-  DUAS.forEach(d=>{
-    if(y > 760){ doc.addPage(); y = margin; }
-    doc.setFont(undefined, "bold");
-    doc.text(d.cat, xRight, y, {align:"right"});
-    y += 16;
-
-    doc.setFont(undefined, "normal");
-    const lines = doc.splitTextToSize(d.text, pageWidth - margin*2);
-    doc.text(lines, xRight, y, {align:"right", baseline:"top"});
-    y += (lines.length * 16) + 8;
-  });
-
-  doc.save("ad3ya.pdf");
-});
-
+      doc.save("ad3ya.pdf");
+      showToast("تم تحميل ملف PDF بنجاح");
+    });
 
     // ---------- مكتبة الأذكار ----------
     const azkarWrap = qs("#azkarCards");
@@ -471,19 +479,11 @@ btn.addEventListener("click", async ()=>{
         if(dhikr==="سبحان الله") counts.subhan++;
         else if(dhikr==="الحمد لله") counts.hamd++;
         else if(dhikr==="الله أكبر") counts.akbar++;
-        else if(dhikr==="لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شئ قدير") counts.ha++;
+        else if(dhikr==="لا إله إلا الله") counts.ha++;
         save("tasbeeh-counts",counts); renderCounts();
 
-        // توست بسيط
-        const toast = document.createElement("div");
-        toast.textContent = `ذكرت: ${dhikr} ✓`;
-        Object.assign(toast.style,{
-          position:"fixed",left:"50%",transform:"translateX(-50%)",
-          bottom:"22px",background:"#0ea5e9",color:"#fff",padding:"10px 14px",
-          borderRadius:"12px",boxShadow:"var(--shadow)",zIndex:99,fontWeight:"700"
-        });
-        document.body.appendChild(toast);
-        setTimeout(()=>toast.remove(),1500);
+        // إظهار التوست
+        showToast(`ذكرت: ${dhikr} ✓`);
       });
 
       leavesGroup.appendChild(g);
@@ -496,6 +496,29 @@ btn.addEventListener("click", async ()=>{
       [240,200],[270,185],[300,205],[410,205],[450,195],[490,210]
     ];
     coords.forEach(([x,y])=>makeLeaf(x,y));
+
+    // دالة لعرض التوست (الإشعارات)
+    function showToast(message) {
+      // إزالة أي توست سابق
+      const existingToast = document.querySelector('.toast');
+      if (existingToast) {
+        existingToast.remove();
+      }
+      
+      const toast = document.createElement("div");
+      toast.className = "toast";
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      // إظهار التوست
+      setTimeout(() => toast.classList.add("show"), 10);
+      
+      // إخفاء التوست بعد 1.5 ثانية
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 300);
+      }, 1500);
+    }
 
     // ---------- تحسين الوصول ----------
     // زر إظهار الإجمالي (محفّز لإعادة الحساب)
@@ -515,9 +538,3 @@ btn.addEventListener("click", async ()=>{
   </script>
 </body>
 </html>
-
-
-
-
-
-
