@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>صدقة جارية لروح أجدادي (رحمهم الله)</title>
+  <meta name="description" content="موقع صدقة جارية لأجدادي يضم القرآن الكريم، وأذكار، وأدعية، وعدّاد تسبيح، وشجرة أجر تفاعلية." />
+  <link rel="stylesheet" href="./style.css" />
+
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <h1>صدقة جارية لروح المتوفين (رحمهم الله)</h1>
+    <div class="names-grid-fixed">
+            <h5>الحاج يوسف عبدالفتاح بكر</h5>
+            <h5>الحاجه ام كلثوم محمد اللبودي</h5>
+
+            <h5>الحاج أحمد محمد اللبودي</h5>
+            <h5>الحاجه امال علي داوود</h5>
+      </div>
+      <p>اللهم اجعلهم في الفردوس الأعلى، وانفعهم بكل ذكر ودعاء وعمل صالح يُنشر من خلال هذا الموقع.</p>
+    </div>
+  
+  </header>
+
+  <main class="wrap">
+    <section class="grid">
+      <!-- القرآن الكريم -->
+      <div class="card span-6" id="quran">
+        <h2>القرآن الكريم</h2>
+        <p class="muted">روابط للتلاوة والاستماع والقراءة.</p>
+        <div class="links">
+          <a class="link-chip" href="https://quran.com" target="_blank" rel="noopener" aria-label="فتح موقع Quran.com">تلاوة عبر Quran.com</a>
+          <a class="link-chip" href="https://www.qurancomplex.gov.sa/kfgqpc-quran-ayah/" target="_blank" rel="noopener" aria-label="فتح مصحف المدينة">مصحف المدينة</a>
+          <a class="link-chip" href="https://tanzil.net/#1:1" target="_blank" rel="noopener" aria-label="فتح موقع تنزيل">موقع تنزيل</a>
+        </div>
+
+    <!-- سور القرآن الكريم -->
+    <div class="card span-6" id="suwar">
+      <h2>سور من القرآن الكريم</h2>
+      <p class="muted">تلاوة بصوت الشيخ عبدالباسط عبدالصمد</p>
+      <div class="cards" id="surahCards"></div>
+    </div>
+
+        
+        <div class="dua">
+          <strong>دعاء للمتوفين:</strong><br>
+          اللهم اغفر لهم وارحمهم وعافهم واعفُ عنهم، وأكرم نُزلهم ووسِّع مُدخلهم، واجعل قبرهم روضة من رياض الجنة.
+        </div>
+      </div>
+
+      <!-- مؤقت تسبيح -->
+      <div class="card span-6" id="tasbeeh">
+        <h2>مؤقت وعداد تسبيح</h2>
+        <p class="muted"></p>
+        <div class="counter">
+          <div>
+            <div class="label">سبحان الله</div>
+            <div class="value" id="c-subhan">0</div>
+          </div>
+          <div class="controls">
+            <button class="pill" data-key="subhan" data-delta="1">+1</button>
+            <button class="pill" data-key="subhan" data-delta="-1">-1</button>
+            <button class="pill" data-key="subhan" data-reset>تصفير</button>
+          </div>
+        </div>
+        <div class="counter">
+          <div>
+            <div class="label">الحمد لله</div>
+            <div class="value" id="c-hamd">0</div>
+          </div>
+          <div class="controls">
+            <button class="pill" data-key="hamd" data-delta="1">+1</button>
+            <button class="pill" data-key="hamd" data-delta="-1">-1</button>
+            <button class="pill" data-key="hamd" data-reset>تصفير</button>
+          </div>
+        </div>
+        <div class="counter">
+          <div>
+            <div class="label">الله أكبر</div>
+            <div class="value" id="c-akbar">0</div>
+          </div>
+          <div class="controls">
+            <button class="pill" data-key="akbar" data-delta="1">+1</button>
+            <button class="pill" data-key="akbar" data-delta="-1">-1</button>
+            <button class="pill" data-key="akbar" data-reset>تصفير</button>
+          </div>
+        </div>
+        <div class="counter">
+          <div>
+            <div class="label">لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شئ قدير</div>
+            <div class="value" id="c-ha">0</div>
+          </div>
+          <div class="controls">
+            <button class="pill" data-key="ha" data-delta="1">+1</button>
+            <button class="pill" data-key="ha" data-delta="-1">-1</button>
+            <button class="pill" data-key="ha" data-reset>تصفير</button>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn ghost" id="totalBtn">إجمالي الأجر: <span id="total">0</span></button>
+          <button class="btn" id="exportTasbeeh">حفظ العدّادات</button>
+        </div>
+      </div>
+
+      <!-- أدعية -->
+      <div class="card span-6" id="duas">
+        <h2>أدعية</h2>
+        <p class="muted">أدعية مختارة</p>
+        <div class="cards" id="duaCards"></div>
+      </div>
+
+      <!-- مكتبة أذكار تفاعلية -->
+      <div class="card span-6" id="azkar">
+        <h2>مكتبة الأذكار</h2>
+        <p class="muted">أدعية وأذكار عن الرسول (ص)</p>
+        <div class="cards" id="azkarCards"></div>
+      </div>
+
+      <!-- شجرة الأجر -->
+      <div class="card span-12 tree" id="tree">
+        <div class="row" style="justify-content:space-between;align-items:center;margin:6px 8px 12px">
+          <h2 style="margin:0">شجرة الأجر التفاعلية</h2>
+          <div class="stat"><strong>عدد الأوراق المباركة:</strong> <span id="leafCount">0</span></div>
+        </div>
+        <svg viewBox="0 0 700 320" role="img" aria-label="شجرة أجر">
+          <!-- جذع -->
+          <rect x="335" y="160" width="30" height="120" fill="#8b5a2b" rx="8"></rect>
+          <!-- فروع -->
+          <path d="M350 170 C 290 140, 260 120, 210 110" stroke="#8b5a2b" stroke-width="8" fill="none"/>
+          <path d="M350 180 C 410 150, 450 130, 500 120" stroke="#8b5a2b" stroke-width="8" fill="none"/>
+          <path d="M350 200 C 300 190, 260 200, 220 210" stroke="#8b5a2b" stroke-width="8" fill="none"/>
+          <path d="M350 210 C 420 210, 470 220, 520 230" stroke="#8b5a2b" stroke-width="8" fill="none"/>
+          <!-- أوراق -->
+          <g id="leaves"></g>
+        </svg>
+        <p class="muted" style="margin:10px 8px 0">
+          اضغط على الورق لاختيار ذكر عشوائي ويُضاف للأجر، وتُحفَظ النتائج محليًا.
+        </p>
+      </div>
+
+      <!-- تبرعات -->
+      <div class="card span-12" id="donate">
+        <h2>التبرع السريع</h2>
+        <p class="muted">اختر جهة موثوقة وافتح الرابط في تبويب جديد.</p>
+        <div class="donate-buttons">
+          <a class="btn" href="https://misrelkheir.org/ar/donation" target="_blank" rel="noopener" aria-label="فتح موقع مصر الخير للتبرع">مصر الخير</a>
+          <a class="btn" href="https://baitzakat.org.eg/donationprogrames/#5" target="_blank" rel="noopener" aria-label="فتح موقع بيت الزكاة والصدقات   ">بيت الزكاة والصدقات</a>
+          <a class="btn" href="https://www.resala.org/donate" target="_blank" rel="noopener" aria-label="فتح موقع رسالة للتبرع">رسالة</a>
+          <a class="btn" href="https://baheya.org/ar/donate" target="_blank" rel="noopener" aria-label="فتح موقع بهية للتبرع">بهية</a>
+          <a class="btn" href="https://www.57357.org/ar/donate" target="_blank" rel="noopener" aria-label="فتح موقع مستشفي 57357">57357</a>
+          <a class="btn" href="https://www.myf-egypt.org/ar/donation/?gad_source=1&gad_campaignid=9975369735&gbraid=0AAAAACbTDCzSvt9ML6XtMTsHrAitFBGR2&gclid=Cj0KCQjw8eTFBhCXARIsAIkiuOxEvcxxi80mcAmfzS0A1RiEEqNM8OVTQz2kSm_RJlKPwlCM6hIETn4aAoRqEALw_wcB" target="_blank" rel="noopener" aria-label="فتح موقع مؤسسه مجدي يعقوب للقلب">مؤسسه مجدي يعقوب للقلب</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+     نسألكم الدعاء للمتوفين بالرحمه والمغفره.
+  </footer>
+
+  <script src="./script.js"> </script>
+  
+</body>
+</html>
