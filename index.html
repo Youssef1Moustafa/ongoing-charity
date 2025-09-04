@@ -3,70 +3,293 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>صدقة جارية</title>
-  <meta name="description" content="موقع صدقة جارية لأجدادي يضم: القرآن الكريم، سور مختارة، أدعية، عدّاد تسبيح، وشجرة أجر تفاعلية." />
+  <title>صدقة جارية لروح جدتي (رحمها الله)</title>
+  <meta name="description" content="موقع صدقة جارية لروح جدتي يضم القرآن الكريم، أذكار، أدعية، عدّاد تسبيح، وشجرة أجر تفاعلية." />
+  <!-- jsPDF لتحميل ملف PDF للأدعية -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
   <style>
     :root{
-      --bg:#f7fafc;--card:#ffffff;--ink:#1f2937;--muted:#6b7280;
-      --primary:#0ea5e9;--primary-ink:#0b5f82;--accent:#22c55e;
-      --shadow:0 10px 20px rgba(0,0,0,.08);--radius:18px;--radius-sm:14px;
+      --bg:#f7fafc;
+      --card:#ffffff;
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --primary:#0ea5e9;
+      --primary-ink:#0b5f82;
+      --accent:#22c55e;
+      --shadow:0 10px 20px rgba(0,0,0,.08);
+      --radius:18px;
+      --radius-sm:14px;
     }
     *{box-sizing:border-box}
-    body{margin:0;padding:0;background:var(--bg);color:var(--ink);
-      font-family:"Tajawal","Segoe UI",system-ui,sans-serif;line-height:1.7}
-    .wrap{max-width:1100px;margin:auto;padding:clamp(14px,2vw,24px)}
-    header.hero{background:linear-gradient(135deg,#38bdf8,#06b6d4);
-      color:#fff;padding:32px 18px;border-bottom-left-radius:28px;
-      border-bottom-right-radius:28px;box-shadow:var(--shadow)}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Tajawal","Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.7}
+    a{color:var(--primary);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+
+  .wrap{max-width:1100px;margin:auto;padding:clamp(14px,2vw,24px)}
+
+
+.names-grid-fixed {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* عمودين */
+    grid-template-rows: repeat(2, auto);   /* صفين */
+    gap: 15px;
+    margin: 20px 0;
+    max-width: 500px;
+    margin-inline: auto;
+  }
+
+  .names-grid-fixed h5 {
+    margin: 0;
+    padding: 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    font-size: clamp(14px, 2vw, 16px);
+    text-align: center;
+  }
+
+
+    header.hero{
+      background:linear-gradient(135deg,#38bdf8, #06b6d4);
+      color:#fff;padding:32px 18px;border-bottom-left-radius:28px;border-bottom-right-radius:28px;box-shadow:var(--shadow);
+    }
     .hero h1{margin:.2rem 0;font-size:clamp(22px,3.6vw,34px);font-weight:800}
-    .names-grid-fixed{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin:20px 0;max-width:500px;margin-inline:auto}
-    .names-grid-fixed h5{margin:0;padding:12px;background:rgba(255,255,255,0.15);
-      border-radius:12px;font-size:clamp(14px,2vw,16px);text-align:center}
-    .grid{display:grid;gap:18px;margin-top:20px;grid-template-columns:repeat(12,1fr)}
-    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .hero h5{margin:.3rem 0 0;font-size:clamp(14px,2.2vw,18px);opacity:.95}
+    .grid{
+      display:grid;gap:18px;margin-top:20px;
+      grid-template-columns:repeat(12,1fr);
+    }
+    .card{
+      background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;
+    }
     .card h2{margin:0 0 10px;font-size:clamp(18px,2.4vw,22px);color:var(--primary-ink)}
     .muted{color:var(--muted)}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;border:none;border-radius:12px;padding:10px 14px;cursor:pointer;
+      background:var(--primary);color:#fff;font-weight:600;transition:.25s box-shadow,.25s transform;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+    .btn.secondary{background:#10b981}
+    .btn.ghost{background:#eef6ff;color:#0b5f82}
+    .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .link-chip{
+      background:#eef6ff;color:#0b5f82;padding:8px 12px;border-radius:999px;font-weight:600;display:inline-flex;align-items:center;gap:8px
+    }
+    .dua{background:#f8fafc;border:1px solid #eef2f7;border-radius:14px;padding:12px;margin:8px 0}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .counter{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;background:#f8fffb;border:1px solid #e8f7ee;
+      border-radius:14px;padding:14px;margin:10px 0
+    }
+    .counter .label{font-weight:700}
+    .counter .value{font-size:22px;font-weight:800}
+    .counter .controls{display:flex;gap:8px;flex-wrap:wrap}
+    .pill{padding:8px 12px;border-radius:12px;border:1px solid #e5e7eb;background:#fff;cursor:pointer}
+    .pill:hover{background:#f3f4f6}
     .cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-    .card-sm{background:#fff;border:1px solid #eef2f7;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px}
+    .card-sm{background:#ffffff;border:1px solid #eef2f7;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px}
     .card-sm .title{font-weight:700;color:#0b5f82}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    audio{width:100%;outline:none}
-    footer{text-align:center;color:var(--muted);margin:26px 0 10px}
-    .span-12{grid-column:span 12}.span-6{grid-column:span 6}
-    @media(max-width:1024px){.span-6{grid-column:span 12}}
+    .card-sm .text{font-size:15px}
+
+    #azkar .card-sm {
+    max-height: 200px;   /* ارتفاع ثابت */
+    overflow-y: auto;    /* Scroll داخلي */
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) #f1f5f9;
+  }
+  #azkar .card-sm::-webkit-scrollbar {
+    width: 6px;
+  }
+  #azkar .card-sm::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+  }
+
+    .tree{
+      background:linear-gradient(180deg,#e6fffb 0,#fafffd 100%);border-radius:var(--radius);
+      border:1px solid #d7f3ee;padding:10px;position:relative;overflow:hidden
+    }
+    svg{max-width:100%;height:auto;display:block;margin:auto}
+    .leaf{cursor:pointer;transition:transform .15s ease}
+    .leaf:hover{transform:scale(1.07)}
+    .stat{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #eef2f7;border-radius:12px;padding:8px 12px;width:max-content}
+    .donate-buttons{display:flex;flex-wrap:wrap;gap:10px}
+    footer{margin:26px 0 10px;text-align:center;color:var(--muted)}
+    /* Layout areas */
+    .span-12{grid-column:span 12}
+    .span-6{grid-column:span 6}
+    .span-4{grid-column:span 4}
+    .span-3{grid-column:span 3}
+    @media (max-width: 1024px){
+      .span-6{grid-column:span 12}
+      .span-4{grid-column:span 6}
+      .span-3{grid-column:span 6}
+    }
+    @media (max-width: 640px){
+      .grid{gap:14px}
+      .span-4,.span-3{grid-column:span 12}
+    }
+    
   </style>
 </head>
 <body>
-<header class="hero">
-  <div class="wrap">
-    <h1>صدقة جارية لروح المتوفين (رحمهم الله)</h1>
+  <header class="hero">
+    <div class="wrap">
+      <h1>صدقة جارية لروح المتوفين (رحمهم الله)</h1>
     <div class="names-grid-fixed">
-      <h5>الحاج يوسف عبدالفتاح بكر</h5>
-      <h5>الحاجه ام كلثوم محمد اللبودي</h5>
-      <h5>الحاج أحمد محمد اللبودي</h5>
-      <h5>الحاجه امال علي داوود</h5>
-    </div>
-    <p>اللهم اجعلهم في الفردوس الأعلى، وانفعهم بكل ذكر ودعاء وعمل صالح يُنشر من خلال هذا الموقع.</p>
-  </div>
-</header>
+            <h5>الحاج يوسف عبدالفتاح بكر</h5>
+            <h5>الحاجه ام كلثوم محمد اللبودي</h5>
 
-<main class="wrap">
-  <section class="grid">
+            <h5>الحاج أحمد محمد اللبودي</h5>
+            <h5>الحاجه امال علي داوود</h5>
+      </div>
+      <p>اللهم اجعلهم في الفردوس الأعلى، وانفعهم بكل ذكر ودعاء وعمل صالح يُنشر من خلال هذا الموقع.</p>
+    </div>
+  
+  </header>
+
+  <main class="wrap">
+    <section class="grid">
+      <!-- القرآن الكريم -->
+      <div class="card span-6" id="quran">
+        <h2>القرآن الكريم</h2>
+        <p class="muted">روابط للتلاوة والاستماع والقراءة.</p>
+        <div class="links">
+          <a class="link-chip" href="https://quran.com" target="_blank" rel="noopener" aria-label="فتح موقع Quran.com">تلاوة عبر Quran.com</a>
+          <a class="link-chip" href="https://www.qurancomplex.gov.sa/kfgqpc-quran-ayah/" target="_blank" rel="noopener" aria-label="فتح مصحف المدينة">مصحف المدينة</a>
+          <a class="link-chip" href="https://tanzil.net/#1:1" target="_blank" rel="noopener" aria-label="فتح موقع تنزيل">موقع تنزيل</a>
+        </div>
+
     <!-- سور القرآن الكريم -->
-    <div class="card span-12" id="suwar">
+    <div class="card span-6" id="suwar">
       <h2>سور من القرآن الكريم</h2>
       <p class="muted">تلاوة بصوت الشيخ عبدالباسط عبدالصمد</p>
       <div class="cards" id="surahCards"></div>
     </div>
-  </section>
-</main>
 
-<footer>
-  صدقة جارية لروح أجدادي 🌹 — نسألكم الدعاء لهم بالرحمة والمغفرة.
-</footer>
+        
+        <div class="dua">
+          <strong>دعاء للمتوفين:</strong><br>
+          اللهم اغفر لها وارحمها وعافها واعفُ عنها، وأكرم نُزلها ووسِّع مُدخلها، واجعل قبرها روضة من رياض الجنة.
+        </div>
+      </div>
 
-<script>
-  // 🔹 بيانات السور وروابط الـ MP3
+      <!-- مؤقت تسبيح -->
+      <div class="card span-6" id="tasbeeh">
+        <h2>مؤقت وعداد تسبيح</h2>
+        <p class="muted">اذكر الله: سبحان الله، الحمد لله، الله أكبر. العدّادات تُحفَظ على جهازك.</p>
+        <div class="counter">
+          <div>
+            <div class="label">سبحان الله</div>
+            <div class="value" id="c-subhan">0</div>
+          </div>
+          <div class="controls">
+            <button class="pill" data-key="subhan" data-delta="1">+1</button>
+            <button class="pill" data-key="subhan" data-delta="33">+33</button>
+            <button class="pill" data-key="subhan" data-delta="-1">-1</button>
+            <button class="pill" data-key="subhan" data-reset>تصفير</button>
+          </div>
+        </div>
+        <div class="counter">
+          <div>
+            <div class="label">الحمد لله</div>
+            <div class="value" id="c-hamd">0</div>
+          </div>
+          <div class="controls">
+            <button class="pill" data-key="hamd" data-delta="1">+1</button>
+            <button class="pill" data-key="hamd" data-delta="33">+33</button>
+            <button class="pill" data-key="hamd" data-delta="-1">-1</button>
+            <button class="pill" data-key="hamd" data-reset>تصفير</button>
+          </div>
+        </div>
+        <div class="counter">
+          <div>
+            <div class="label">الله أكبر</div>
+            <div class="value" id="c-akbar">0</div>
+          </div>
+          <div class="controls">
+            <button class="pill" data-key="akbar" data-delta="1">+1</button>
+            <button class="pill" data-key="akbar" data-delta="33">+33</button>
+            <button class="pill" data-key="akbar" data-delta="-1">-1</button>
+            <button class="pill" data-key="akbar" data-reset>تصفير</button>
+          </div>
+        </div>
+        <div class="counter">
+          <div>
+            <div class="label">لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شئ قدير</div>
+            <div class="value" id="c-ha">0</div>
+          </div>
+          <div class="controls">
+            <button class="pill" data-key="ha" data-delta="1">+1</button>
+            <button class="pill" data-key="ha" data-delta="-1">-1</button>
+            <button class="pill" data-key="ha" data-reset>تصفير</button>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn ghost" id="totalBtn">إجمالي الأجر: <span id="total">0</span></button>
+          <button class="btn" id="exportTasbeeh">حفظ العدّادات</button>
+        </div>
+      </div>
+
+      <!-- أدعية + تحميل PDF -->
+      <div class="card span-6" id="duas">
+        <h2>أدعية مختارة + تحميل PDF</h2>
+        <p class="muted">أدعية الرحمة والمغفرة والصبر والرزق. يمكنك تحميلها كملف PDF.</p>
+        <div class="cards" id="duaCards"></div>
+        <div style="margin-top:10px">
+          <button class="btn secondary" id="downloadPDF">تحميل الأدعية PDF</button>
+        </div>
+      </div>
+
+      <!-- مكتبة أذكار تفاعلية -->
+      <div class="card span-6" id="azkar">
+        <h2>مكتبة الأذكار</h2>
+        <p class="muted">أذكار الصباح والمساء والنوم — انسخ وشارك</p>
+        <div class="cards" id="azkarCards"></div>
+      </div>
+
+      <!-- شجرة الأجر -->
+      <div class="card span-12 tree" id="tree">
+        <div class="row" style="justify-content:space-between;align-items:center;margin:6px 8px 12px">
+          <h2 style="margin:0">شجرة الأجر التفاعلية</h2>
+          <div class="stat"><strong>عدد الأوراق المباركة:</strong> <span id="leafCount">0</span></div>
+        </div>
+        <svg viewBox="0 0 700 320" role="img" aria-label="شجرة أجر">
+          <!-- جذع -->
+          <rect x="335" y="160" width="30" height="120" fill="#8b5a2b" rx="8"></rect>
+          <!-- فروع -->
+          <path d="M350 170 C 290 140, 260 120, 210 110" stroke="#8b5a2b" stroke-width="8" fill="none"/>
+          <path d="M350 180 C 410 150, 450 130, 500 120" stroke="#8b5a2b" stroke-width="8" fill="none"/>
+          <path d="M350 200 C 300 190, 260 200, 220 210" stroke="#8b5a2b" stroke-width="8" fill="none"/>
+          <path d="M350 210 C 420 210, 470 220, 520 230" stroke="#8b5a2b" stroke-width="8" fill="none"/>
+          <!-- أوراق -->
+          <g id="leaves"></g>
+        </svg>
+        <p class="muted" style="margin:10px 8px 0">
+          اضغط على الورق لاختيار ذكر عشوائي ويُضاف للأجر، وتُحفَظ النتائج محليًا.
+        </p>
+      </div>
+
+      <!-- تبرعات -->
+      <div class="card span-12" id="donate">
+        <h2>التبرع السريع</h2>
+        <p class="muted">اختر جهة موثوقة وافتح الرابط في تبويب جديد.</p>
+        <div class="donate-buttons">
+          <a class="btn" href="https://misrelkheir.org/ar/donation" target="_blank" rel="noopener">مصر الخير</a>
+          <a class="btn" href="https://www.foodbankegypt.org/donate" target="_blank" rel="noopener">بنك الطعام</a>
+          <a class="btn" href="https://www.resala.org/donate" target="_blank" rel="noopener">رسالة</a>
+          <a class="btn" href="https://baheya.org/ar/donate" target="_blank" rel="noopener">بهية</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    صدقة جارية لروح جدتي 🌹 — نسألكم الدعاء لها بالرحمة والمغفرة.
+  </footer>
+
+  <script>
+      // 🔹 بيانات السور وروابط الـ MP3
   const SURAHS = [
     {
       name: "سورة الكهف",
@@ -82,8 +305,8 @@
     }
   ];
 
-  const qs = s => document.querySelector(s);
-  const surahWrap = qs("#surahCards");
+  const SQ = s => document.querySelector(s);
+  const surahWrap = SQ("#surahCards");
 
   SURAHS.forEach((s, i) => {
     const el = document.createElement("div");
@@ -96,9 +319,230 @@
     `;
     surahWrap.appendChild(el);
   });
-</script>
+
+  // ---------- بيانات الأدعية والأذكار ----------
+  const DUAS = [
+    {cat:"الرحمة والمغفرة", text:"اللهم اغفر لها وارحمها وعافها واعفُ عنها، وأكرم نُزلها ووسِّع مُدخلها."},
+    {cat:"الرحمة والمغفرة", text:"اللهم اجعل قبرها روضة من رياض الجنة ولا تجعله حفرة من حفر النار."},
+      {cat:"الصبر", text:"اللهم ارزقنا الصبر والسلوان، ولا تحرمنا أجرها ولا تفتنا بعدها."},
+      {cat:"الرزق", text:"اللهم ارزقنا رضاك والبركة في أعمارنا وأرزاقنا."},
+      {cat:"الرحمة والمغفرة", text:"اللهم نقِّها من الخطايا كما يُنقّى الثوب الأبيض من الدنس."},
+      {cat:"الصبر", text:"اللهم أبدل حزننا فرحًا بلقائها في جنات النعيم."}
+    ];
+
+    const AZKAR = [
+      {title:"أذكار الصباح", text:"(أَصبَحْنا على فِطرةِ الإسلامِ، وعلى كَلِمةِ الإخلاصِ، وعلى دِينِ نَبيِّنا محمَّدٍ صلَّى اللهُ عليه وسلَّمَ، وعلى مِلَّةِ أبِينا إبراهيمَ، حَنيفًا مُسلِمًا، وما كان مِنَ المُشرِكينَ).[٣] (بسمِ اللهِ الذي لا يَضرُ مع اسمِه شيءٌ في الأرضِ ولا في السماءِ وهو السميعُ العليمِ).[٤](ثلاثُ مراتٍ)."},
+      {title:"أذكار المساء", text:"أمسينا وأمسى الملك لله... لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير."},
+      {title:"ذكر عام", text:"سبحان الله وبحمده، سبحان الله العظيم."},
+      {title:"أذكار النوم", text:"باسمك ربي وضعت جنبي وبك أرفعه... إن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين."}
+    ];
+
+    const RANDOM_AZKAR = [
+      "سبحان الله", "الحمد لله", "الله أكبر", "لا إله إلا الله",
+      "لا حول ولا قوة إلا بالله", "سبحان الله وبحمده", "أستغفر الله العظيم"
+    ];
+
+    // ---------- أدوات عامة ----------
+    const qs = s => document.querySelector(s);
+    const qsa = s => [...document.querySelectorAll(s)];
+    const save = (k,v)=>localStorage.setItem(k,JSON.stringify(v));
+    const load = (k,def)=>{try{const v=JSON.parse(localStorage.getItem(k));return v??def;}catch{return def;}};
+
+    // ---------- عدّاد التسبيح ----------
+    const counts = load("tasbeeh-counts",{subhan:0,hamd:0,akbar:0,ha:0});
+    function renderCounts(){
+      qs("#c-subhan").textContent = counts.subhan;
+      qs("#c-hamd").textContent   = counts.hamd;
+      qs("#c-akbar").textContent  = counts.akbar;
+      qs("#c-ha").textContent  = counts.ha;
+      qs("#total").textContent    = counts.subhan + counts.hamd + counts.akbar + counts.ha;
+    }
+    renderCounts();
+
+    qsa("#tasbeeh .controls .pill").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const key = btn.dataset.key;
+        if(btn.hasAttribute("data-reset")) counts[key]=0;
+        else counts[key] = Math.max(0, counts[key] + parseInt(btn.dataset.delta,10));
+        save("tasbeeh-counts",counts);
+        renderCounts();
+      });
+    });
+
+    qs("#exportTasbeeh").addEventListener("click",()=>{
+      const data = [
+        `سبحان الله: ${counts.subhan}`,
+        `الحمد لله: ${counts.hamd}`,
+        `الله أكبر: ${counts.akbar}`,
+        `لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير: ${counts.ha}`,
+        `الإجمالي: ${counts.subhan+counts.hamd+counts.akbar+counts.ha}`
+      ].join("\n");
+      const blob = new Blob([data],{type:"text/plain;charset=utf-8"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "tasbeeh_counts.txt";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // ---------- بطاقات الأدعية + PDF ----------
+    const duaWrap = qs("#duaCards");
+    DUAS.forEach((d,i)=>{
+      const el = document.createElement("div");
+      el.className = "card-sm";
+      el.innerHTML = `
+        <div class="title">${d.cat}</div>
+        <div class="text">${d.text}</div>
+        <div class="row">
+          <button class="pill copy-btn">نسخ</button>
+        </div>
+      `;
+      el.querySelector(".copy-btn").addEventListener("click", ()=>{
+        navigator.clipboard.writeText(d.text).then(()=>{
+          const b = el.querySelector(".copy-btn");
+          const old = b.textContent;
+          b.textContent = "✓ تم النسخ";
+          setTimeout(()=>b.textContent = old, 1500);
+        });
+      });
+      duaWrap.appendChild(el);
+    });
+
+    // تحميل PDF للأدعية باستخدام jsPDF
+    window.addEventListener("load", ()=>{
+      const btn = qs("#downloadPDF");
+      btn.addEventListener("click", async ()=>{
+        const { jsPDF } = window.jspdf || {};
+        if(!jsPDF){ alert("حدث خطأ في تحميل مكتبة PDF. تحقق من الاتصال بالإنترنت ثم أعد المحاولة."); return; }
+        const doc = new jsPDF({unit:"pt", format:"a4"});
+        const margin = 48;
+        let y = margin;
+
+        doc.setFont("Helvetica","bold");
+        doc.setFontSize(16);
+        doc.text("أدعية مختارة - صدقة جارية لروح جدتي (رحمها الله)", margin, y, {align:"right"});
+        y += 22;
+
+        doc.setFont("Helvetica","normal");
+        doc.setFontSize(12);
+
+        const wrapText = (text, maxWidth) => {
+          const words = text.split(" ");
+          let line = "", lines = [];
+          words.forEach(w=>{
+            const test = line ? line + " " + w : w;
+            const wWidth = doc.getTextWidth(test);
+            if(wWidth > maxWidth){ lines.push(line); line = w; }
+            else line = test;
+          });
+          if(line) lines.push(line);
+          return lines;
+        };
+
+        DUAS.forEach(d=>{
+          if(y > 760){ doc.addPage(); y = margin; }
+          doc.setFont("Helvetica","bold"); doc.text(d.cat, margin, y, {align:"right"}); y+=16;
+          doc.setFont("Helvetica","normal");
+          const lines = wrapText(d.text, 500);
+          lines.forEach(ln=>{ doc.text(ln, margin, y, {align:"right"}); y+=16; });
+          y += 8;
+        });
+
+        doc.save("ad3ya.pdf");
+      });
+    });
+
+    // ---------- مكتبة الأذكار ----------
+    const azkarWrap = qs("#azkarCards");
+    AZKAR.forEach(z=>{
+      const el = document.createElement("div");
+      el.className = "card-sm";
+      el.innerHTML = `
+        <div class="title">${z.title}</div>
+        <div class="text">${z.text}</div>
+        <div class="row">
+          <button class="pill copy">نسخ الذكر</button>
+        </div>
+      `;
+      el.querySelector(".copy").addEventListener("click", ()=>{
+        navigator.clipboard.writeText(z.text).then(()=>{
+          const b = el.querySelector(".copy");
+          const old = b.textContent;
+          b.textContent = "✓ تم النسخ";
+          setTimeout(()=>b.textContent = old, 1500);
+        });
+      });
+      azkarWrap.appendChild(el);
+    });
+
+    // ---------- شجرة الأجر التفاعلية ----------
+    const leavesGroup = qs("#leaves");
+    const leafCountEl = qs("#leafCount");
+    const treeState = load("tree-leaves",{count:0});
+    leafCountEl.textContent = treeState.count;
+
+    // توليد أوراق في أماكن مختلفة
+    function makeLeaf(cx, cy){
+      const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+      g.setAttribute("class","leaf");
+      const path = document.createElementNS("http://www.w3.org/2000/svg","path");
+      path.setAttribute("d","M0 0 C 12 -8, 28 -8, 36 0 C 28 8, 12 8, 0 0 Z");
+      path.setAttribute("fill","#22c55e");
+      g.setAttribute("transform",`translate(${cx} ${cy}) rotate(${(Math.random()*40-20).toFixed(1)})`);
+      g.appendChild(path);
+
+      g.addEventListener("click", ()=>{
+        // اختيار ذكر عشوائي
+        const dhikr = RANDOM_AZKAR[Math.floor(Math.random()*RANDOM_AZKAR.length)];
+        // زيادة عداد الإجمالي + إظهار تلميح
+        treeState.count += 1; save("tree-leaves",treeState);
+        leafCountEl.textContent = treeState.count;
+
+        // إضافة للعدّادات إذا ينطبق
+        if(dhikr==="سبحان الله") counts.subhan++;
+        else if(dhikr==="الحمد لله") counts.hamd++;
+        else if(dhikr==="الله أكبر") counts.akbar++;
+        else if(dhikr==="لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شئ قدير") counts.ha++;
+        save("tasbeeh-counts",counts); renderCounts();
+
+        // توست بسيط
+        const toast = document.createElement("div");
+        toast.textContent = `ذكرت: ${dhikr} ✓`;
+        Object.assign(toast.style,{
+          position:"fixed",left:"50%",transform:"translateX(-50%)",
+          bottom:"22px",background:"#0ea5e9",color:"#fff",padding:"10px 14px",
+          borderRadius:"12px",boxShadow:"var(--shadow)",zIndex:99,fontWeight:"700"
+        });
+        document.body.appendChild(toast);
+        setTimeout(()=>toast.remove(),1500);
+      });
+
+      leavesGroup.appendChild(g);
+    }
+
+    // توزيع إحداثيات الأوراق
+    const coords = [
+      [190,100],[220,120],[250,90],[280,110],[310,95],
+      [390,95],[420,120],[450,100],[480,115],[510,95],
+      [240,200],[270,185],[300,205],[410,205],[450,195],[490,210]
+    ];
+    coords.forEach(([x,y])=>makeLeaf(x,y));
+
+    // ---------- تحسين الوصول ----------
+    // زر إظهار الإجمالي (محفّز لإعادة الحساب)
+    qs("#totalBtn").addEventListener("click", ()=>renderCounts());
+
+    // ---------- تخصيص الاسم (اختياري) ----------
+    // يمكنك تعديل العنوان بسرعة بإضافة ?name=اسم
+    (function setNameFromQuery(){
+      const params = new URLSearchParams(location.search);
+      const name = params.get("name");
+      if(name){
+        document.title = `صدقة جارية لروح ${name}`;
+        const h1 = document.querySelector(".hero h1");
+        h1.textContent = `صدقة جارية لروح ${name} (رحمها الله)`;
+      }
+    })();
+  </script>
 </body>
 </html>
-
-
-
