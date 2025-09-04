@@ -21,8 +21,8 @@
 
 .names-grid-fixed {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* عمودين */
-    grid-template-rows: repeat(2, auto);   /* صفين */
+    grid-template-columns: repeat(5, 1fr); /* عمودين 5  */
+    grid-template-rows: repeat(1, auto);   /* صفين 1 */
     gap: 15px;
     margin: 20px 0;
     max-width: 500px;
@@ -123,4 +123,5 @@
     @media (max-width: 640px){
       .grid{gap:14px}
       .span-4,.span-3{grid-column:span 12}
+
     }
