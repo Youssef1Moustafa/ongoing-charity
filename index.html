@@ -262,7 +262,8 @@
           <a class="btn" href="https://baitzakat.org.eg/donationprogrames/#5" target="_blank" rel="noopener" aria-label="فتح موقع بيت الزكاة والصدقات   ">بيت الزكاة والصدقات</a>
           <a class="btn" href="https://www.resala.org/donate" target="_blank" rel="noopener" aria-label="فتح موقع رسالة للتبرع">رسالة</a>
           <a class="btn" href="https://baheya.org/ar/donate" target="_blank" rel="noopener" aria-label="فتح موقع بهية للتبرع">بهية</a>
-          <a class="btn" href="https://baheya.org/ar/donate" target="_blank" rel="noopener" aria-label="فتح موقع مستشفي 57357">57357</a>
+          <a class="btn" href="https://www.57357.org/ar/donate" target="_blank" rel="noopener" aria-label="فتح موقع مستشفي 57357">57357</a>
+          <a class="btn" href="https://www.myf-egypt.org/ar/donation/?gad_source=1&gad_campaignid=9975369735&gbraid=0AAAAACbTDCzSvt9ML6XtMTsHrAitFBGR2&gclid=Cj0KCQjw8eTFBhCXARIsAIkiuOxEvcxxi80mcAmfzS0A1RiEEqNM8OVTQz2kSm_RJlKPwlCM6hIETn4aAoRqEALw_wcB" target="_blank" rel="noopener" aria-label="فتح موقع مؤسسه مجدي يعقوب للقلب">مؤسسه مجدي يعقوب للقلب</a>
         </div>
       </div>
     </section>
@@ -284,14 +285,17 @@
     ];
 
     const AZKAR = [
-      {title:"أذكار الصباح", text:"(أَصبَحْنا على فِطرةِ الإسلامِ، وعلى كَلِمةِ الإخلاصِ، وعلى دِينِ نَبيِّنا محمَّدٍ صلَّى اللهُ عليه وسلَّمَ، وعلى مِلَّةِ أبِينا إبراهيمَ، حَنيفًا مُسلِمًا، وما كان مِنَ المُشرِكينَ).
+  {
+    title: "أذكار الصباح",
+    text: `أَصبَحْنا على فِطرةِ الإسلامِ، وعلى كلمةِ الإخلاصِ، وعلى دينِ نبيِّنا محمدٍ ﷺ، وعلى مِلَّةِ أبينا إبراهيم حنيفًا مسلمًا، وما كان من المشركين.
+    
+بِسمِ اللهِ الذي لا يضرُّ مع اسمِه شيءٌ في الأرضِ ولا في السماءِ وهو السميعُ العليمُ (ثلاث مرات).`
+  },
+  { title:"أذكار المساء", text:"أمسينا وأمسى الملك لله... لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير."},
+  { title:"ذكر عام", text:"سبحان الله وبحمده، سبحان الله العظيم."},
+  { title:"أذكار النوم", text:"باسمك ربي وضعت جنبي وبك أرفعه... إن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين."}
+];
 
-(بسمِ اللهِ الذي لا يَضرُ مع اسمِه شيءٌ في الأرضِ ولا في السماءِ وهو السميعُ العليمِ).[٤](ثلاثُ مراتٍ).
-"},
-      {title:"أذكار المساء", text:"أمسينا وأمسى الملك لله... لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير."},
-      {title:"ذكر عام", text:"سبحان الله وبحمده، سبحان الله العظيم."},
-      {title:"أذكار النوم", text:"باسمك ربي وضعت جنبي وبك أرفعه... إن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين."}
-    ];
 
     const RANDOM_AZKAR = [
       "سبحان الله", "الحمد لله", "الله أكبر", "لا إله إلا الله",
@@ -365,48 +369,57 @@
     });
 
     // تحميل PDF للأدعية باستخدام jsPDF
-    window.addEventListener("load", ()=>{
-      const btn = qs("#downloadPDF");
-      btn.addEventListener("click", async ()=>{
-        const { jsPDF } = window.jspdf || {};
-        if(!jsPDF){ alert("حدث خطأ في تحميل مكتبة PDF. تحقق من الاتصال بالإنترنت ثم أعد المحاولة."); return; }
-        const doc = new jsPDF({unit:"pt", format:"a4"});
-        const margin = 48;
-        let y = margin;
+    async function useArabicFont(doc){
+  try{
+    const res = await fetch("./fonts/Tajawal-Regular.ttf");
+    const buf = await res.arrayBuffer();
+    let binary = "";
+    const bytes = new Uint8Array(buf);
+    const chunk = 0x8000;
+    for (let i=0; i<bytes.length; i+=chunk){
+      binary += String.fromCharCode(...bytes.subarray(i, i+chunk));
+    }
+    const base64 = btoa(binary);
+    doc.addFileToVFS("Tajawal-Regular.ttf", base64);
+    doc.addFont("Tajawal-Regular.ttf", "Tajawal", "normal");
+    doc.setFont("Tajawal", "normal");
+  }catch(e){
+    console.warn("تعذّر تحميل خط عربي. سيُستخدم خط افتراضي.", e);
+  }
+}
 
-        doc.setFont("Helvetica","bold");
-        doc.setFontSize(16);
-        doc.text("أدعية مختارة - صدقة جارية لروح جدتي (رحمها الله)", margin, y, {align:"right"});
-        y += 22;
+btn.addEventListener("click", async ()=>{
+  const { jsPDF } = window.jspdf || {};
+  if(!jsPDF){ alert("مكتبة PDF لم تُحمَّل."); return; }
 
-        doc.setFont("Helvetica","normal");
-        doc.setFontSize(12);
+  const doc = new jsPDF({unit:"pt", format:"a4"});
+  await useArabicFont(doc);
 
-        const wrapText = (text, maxWidth) => {
-          const words = text.split(" ");
-          let line = "", lines = [];
-          words.forEach(w=>{
-            const test = line ? line + " " + w : w;
-            const wWidth = doc.getTextWidth(test);
-            if(wWidth > maxWidth){ lines.push(line); line = w; }
-            else line = test;
-          });
-          if(line) lines.push(line);
-          return lines;
-        };
+  const margin = 48;
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const xRight = pageWidth - margin;
 
-        DUAS.forEach(d=>{
-          if(y > 760){ doc.addPage(); y = margin; }
-          doc.setFont("Helvetica","bold"); doc.text(d.cat, margin, y, {align:"right"}); y+=16;
-          doc.setFont("Helvetica","normal");
-          const lines = wrapText(d.text, 500);
-          lines.forEach(ln=>{ doc.text(ln, margin, y, {align:"right"}); y+=16; });
-          y += 8;
-        });
+  doc.setFontSize(16);
+  doc.text("أدعية مختارة - صدقة جارية", xRight, margin, {align:"right"});
 
-        doc.save("ad3ya.pdf");
-      });
-    });
+  doc.setFontSize(12);
+  let y = margin + 22;
+
+  DUAS.forEach(d=>{
+    if(y > 760){ doc.addPage(); y = margin; }
+    doc.setFont(undefined, "bold");
+    doc.text(d.cat, xRight, y, {align:"right"});
+    y += 16;
+
+    doc.setFont(undefined, "normal");
+    const lines = doc.splitTextToSize(d.text, pageWidth - margin*2);
+    doc.text(lines, xRight, y, {align:"right", baseline:"top"});
+    y += (lines.length * 16) + 8;
+  });
+
+  doc.save("ad3ya.pdf");
+});
+
 
     // ---------- مكتبة الأذكار ----------
     const azkarWrap = qs("#azkarCards");
@@ -502,6 +515,7 @@
   </script>
 </body>
 </html>
+
 
 
 
