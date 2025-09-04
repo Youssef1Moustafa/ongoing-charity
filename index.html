@@ -25,6 +25,24 @@
     a{color:var(--primary);text-decoration:none}
     a:hover{text-decoration:underline}
     .wrap{max-width:1100px;margin:auto;padding:clamp(14px,2vw,24px)}
+    .names-grid-fixed {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* عمودين */
+    grid-template-rows: repeat(2, auto);   /* صفين */
+    gap: 15px;
+    margin: 20px 0;
+    max-width: 500px;
+    margin-inline: auto;
+  }
+
+  .names-grid-fixed h5 {
+    margin: 0;
+    padding: 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    font-size: clamp(14px, 2vw, 16px);
+    text-align: center;
+  }
     header.hero{
       background:linear-gradient(135deg,#38bdf8, #06b6d4);
       color:#fff;padding:32px 18px;border-bottom-left-radius:28px;border-bottom-right-radius:28px;box-shadow:var(--shadow);
@@ -66,6 +84,21 @@
     .card-sm{background:#ffffff;border:1px solid #eef2f7;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px}
     .card-sm .title{font-weight:700;color:#0b5f82}
     .card-sm .text{font-size:15px}
+
+    #azkar .card-sm {
+    max-height: 200px;   /* ارتفاع ثابت */
+    overflow-y: auto;    /* Scroll داخلي */
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) #f1f5f9;
+  }
+  #azkar .card-sm::-webkit-scrollbar {
+    width: 6px;
+  }
+  #azkar .card-sm::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+  }
+    
     .tree{
       background:linear-gradient(180deg,#e6fffb 0,#fafffd 100%);border-radius:var(--radius);
       border:1px solid #d7f3ee;padding:10px;position:relative;overflow:hidden
@@ -96,10 +129,13 @@
   <header class="hero">
     <div class="wrap">
       <h1>صدقة جارية لروح المتوفين (رحمهم الله)</h1>
+          <div class="names-grid-fixed">
+
             <h5>الحاج يوسف عبدالفتاح بكر</h5>
-            <h5>الحاج أحمد محمد اللبودي</h5>
             <h5>الحاجه ام كلثوم محمد اللبودي</h5>
+            <h5>الحاج أحمد محمد اللبودي</h5>
             <h5>الحاجه امال علي داوود</h5>
+          </div>
       <p>اللهم اجعلهم في الفردوس الأعلى، وانفعهم بكل ذكر ودعاء وعمل صالح يُنشر من خلال هذا الموقع.</p>
     </div>
   </header>
@@ -248,7 +284,10 @@
     ];
 
     const AZKAR = [
-      {title:"أذكار الصباح", text:"أصبحنا وأصبح الملك لله... لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير."},
+      {title:"أذكار الصباح", text:"(أَصبَحْنا على فِطرةِ الإسلامِ، وعلى كَلِمةِ الإخلاصِ، وعلى دِينِ نَبيِّنا محمَّدٍ صلَّى اللهُ عليه وسلَّمَ، وعلى مِلَّةِ أبِينا إبراهيمَ، حَنيفًا مُسلِمًا، وما كان مِنَ المُشرِكينَ).
+
+(بسمِ اللهِ الذي لا يَضرُ مع اسمِه شيءٌ في الأرضِ ولا في السماءِ وهو السميعُ العليمِ).[٤](ثلاثُ مراتٍ).
+"},
       {title:"أذكار المساء", text:"أمسينا وأمسى الملك لله... لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير."},
       {title:"ذكر عام", text:"سبحان الله وبحمده، سبحان الله العظيم."},
       {title:"أذكار النوم", text:"باسمك ربي وضعت جنبي وبك أرفعه... إن أمسكت نفسي فارحمها، وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين."}
@@ -463,6 +502,7 @@
   </script>
 </body>
 </html>
+
 
 
 
