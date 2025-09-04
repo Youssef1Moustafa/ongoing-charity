@@ -14,7 +14,7 @@
     },
    {
       name: "سورة يس",
-      src: "https://archive.org/embed/036-yaseen-surah-quran-by-abdul-basit-mujawwad-128kb-mp-3"
+      src: "https://server7.mp3quran.net/basit/Almusshaf-Al-Mojawwad/036.mp3"
     }
   ];
 
@@ -214,3 +214,4 @@
       }
 
     })();
+
