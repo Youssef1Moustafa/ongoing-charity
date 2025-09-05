@@ -21,23 +21,34 @@
 
 .names-grid-fixed {
   display: flex;
-  flex-wrap: nowrap;      /* صف واحد فقط */
-  justify-content: center; /* توسيط الأسماء */
-  gap: 12px;               /* مسافة بين الأسماء */
+  flex-wrap: nowrap;          /* يخليهم صف واحد فقط */
+  justify-content: center;    /* توسيط العناصر */
+  gap: 15px;                  /* مسافة بين الأسماء */
   margin: 20px 0;
-  overflow-x: auto;        /* لو عدد الأسماء كبير يسمح بالتمرير */
-  padding-bottom: 10px;
+  overflow-x: auto;           /* تمكين التمرير الأفقي */
+  -webkit-overflow-scrolling: touch; /* تمرير سلس على الموبايل */
+  scrollbar-width: thin;      /* شريط تمرير أنحف (Firefox) */
 }
 
-.names-grid-fixed h7 {
+.names-grid-fixed::-webkit-scrollbar {
+  height: 6px;                /* ارتفاع شريط التمرير */
+}
+.names-grid-fixed::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 6px;
+}
+
+.names-grid-fixed h5 {
   margin: 0;
   padding: 12px 18px;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   font-size: clamp(14px, 2vw, 16px);
   text-align: center;
-  white-space: nowrap;     /* يمنع كسر الاسم لسطرين */
+  white-space: nowrap;        /* يمنع الاسم يتقسم لسطرين */
+  flex-shrink: 0;             /* يمنع ضغط العناصر */
 }
+
 
 
     header.hero{
@@ -126,6 +137,7 @@
       .span-4,.span-3{grid-column:span 12}
 
     }
+
 
 
 
