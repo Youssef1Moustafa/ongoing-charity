@@ -23,13 +23,13 @@
   display: flex;
   flex-wrap: nowrap;      /* صف واحد فقط */
   justify-content: center; /* توسيط الأسماء */
-  gap: 15px;               /* مسافة بين الأسماء */
+  gap: 12px;               /* مسافة بين الأسماء */
   margin: 20px 0;
   overflow-x: auto;        /* لو عدد الأسماء كبير يسمح بالتمرير */
   padding-bottom: 10px;
 }
 
-.names-grid-fixed h6 {
+.names-grid-fixed h7 {
   margin: 0;
   padding: 12px 18px;
   background: rgba(255, 255, 255, 0.15);
@@ -126,6 +126,7 @@
       .span-4,.span-3{grid-column:span 12}
 
     }
+
 
 
 
