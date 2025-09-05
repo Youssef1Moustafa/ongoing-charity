@@ -20,34 +20,24 @@
 
 
 .names-grid-fixed {
-  display: flex;
-  flex-wrap: nowrap;          /* يخليهم صف واحد فقط */
-  justify-content: center;    /* توسيط العناصر */
-  gap: 15px;                  /* مسافة بين الأسماء */
-  margin: 20px 0;
-  overflow-x: auto;           /* تمكين التمرير الأفقي */
-  -webkit-overflow-scrolling: touch; /* تمرير سلس على الموبايل */
-  scrollbar-width: thin;      /* شريط تمرير أنحف (Firefox) */
-}
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* عمودين */
+      grid-template-rows: repeat(2, auto);   /* صفين */
+      gap: 15px;
+      margin: 20px 0;
+      max-width: 500px;
+      margin-inline: auto;
+    }
 
-.names-grid-fixed::-webkit-scrollbar {
-  height: 6px;                /* ارتفاع شريط التمرير */
-}
-.names-grid-fixed::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.3);
-  border-radius: 6px;
-}
+    .names-grid-fixed h7 {
+      margin: 0;
+      padding: 12px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      font-size: clamp(14px, 2vw, 16px);
+      text-align: center;
+    }
 
-.names-grid-fixed h7 {
-  margin: 0;
-  padding: 12px 18px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  font-size: clamp(14px, 2vw, 16px);
-  text-align: center;
-  white-space: nowrap;        /* يمنع الاسم يتقسم لسطرين */
-  flex-shrink: 0;             /* يمنع ضغط العناصر */
-}
 
 
 
@@ -137,6 +127,7 @@
       .span-4,.span-3{grid-column:span 12}
 
     }
+
 
 
 
